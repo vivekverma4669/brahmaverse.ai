@@ -1,25 +1,13 @@
 {
-  "name": "brahmaverse-food-app",
-  "version": "1.0.0",
+  "name": "brahmaverse-assignments",
   "private": true,
-  "type": "module",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1",
-    "test": "node --test tests/utils.test.js",
-    "test:e2e": "playwright test"
-  },
-  "dependencies": {
-    "lucide-react": "^0.468.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.0.0"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.51.0",
-    "@vitejs/plugin-react": "^4.3.4",
-    "prettier": "^3.9.10",
-    "vite": "^6.0.0"
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build",
+    "test:frontend": "npm --prefix frontend test",
+    "test:frontend:e2e": "npm --prefix frontend run test:e2e",
+    "test:backend": "npm --prefix backend test"
   }
 }

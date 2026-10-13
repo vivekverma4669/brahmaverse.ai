@@ -1,0 +1,36 @@
+{
+  "name": "crm-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test --test-concurrency=1 tests/api.test.js",
+    "check": "node scripts/check-syntax.js",
+    "demo": "node scripts/demo.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.1"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.2.3",
+    "supertest": "^7.1.4"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "downloadDir": ".cache/mongodb",
+      "disablePostinstall": true
+    }
+  }
+}

@@ -79,6 +79,26 @@ async function submit(name) {
   return res.body.data.enquiry;
 }
 
+test('Swagger serves local assets and a same-server specification with correct auth scope', async () => {
+  const spec = await request(app).get('/api-docs.json').expect(200);
+  assert.equal(spec.body.openapi, '3.0.3');
+  assert.equal(spec.body.servers[0].url, '/');
+  assert.equal(Object.keys(spec.body.paths).length, 8);
+  assert.equal(spec.body.paths['/api/enquiries'].post.security, undefined);
+  assert.deepEqual(spec.body.paths['/api/enquiries/public'].get.security, [{ bearerAuth: [] }]);
+  const page = await request(app).get('/api-docs/').expect(200);
+  assert.match(page.text, /swagger-ui-init.js/);
+  const policy = page.headers['content-security-policy'];
+  assert.match(policy, /script-src 'self' 'unsafe-inline'/);
+  assert.doesNotMatch(policy, /upgrade-insecure-requests/);
+  await request(app).get('/api-docs/swagger-ui-bundle.js').expect(200);
+  const init = await request(app).get('/api-docs/swagger-ui-init.js').expect(200);
+  assert.match(init.text, /CRM Developer Assignment API/);
+  assert.match(init.text, /bearerAuth/);
+  const health = await request(app).get('/api/health').expect(200);
+  assert.doesNotMatch(health.headers['content-security-policy'], /script-src 'self' 'unsafe-inline'/);
+});
+
 test('registration normalizes email, hashes passwords, and never returns the hash', async () => {
   const res = await request(app)
     .post('/api/auth/register')

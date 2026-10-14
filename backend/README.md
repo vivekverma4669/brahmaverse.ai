@@ -34,6 +34,14 @@ npm run dev
 
 ## Endpoints
 
+### Interactive API review (Swagger)
+
+After starting the backend, open [Swagger UI](http://localhost:5000/api-docs/). The [OpenAPI JSON](http://localhost:5000/api-docs.json) is also available for import into API tools.
+
+Use **Try it out** to register an employee and log in. Copy `data.token`, click **Authorize** and paste the token alone; Swagger adds the Bearer prefix. Submit a public enquiry, list unclaimed leads, copy an enquiry's `_id` into the claim operation and list your claimed leads. Register a second employee and switch tokens to verify that private leads are hidden. Requests are executed against the backend serving the documentation. Authorization is not persisted across browser reloads.
+
+For a quick review without configuring a database, run `npm ci` and `npm run demo` in this directory. The first run downloads MongoDB; demo data disappears when it stops.
+
 | Method | Endpoint                   | Authentication | Behavior                                             |
 | ------ | -------------------------- | -------------- | ---------------------------------------------------- |
 | POST   | `/api/auth/register`       | Public         | Register counselor; `201`, duplicate email `409`     |

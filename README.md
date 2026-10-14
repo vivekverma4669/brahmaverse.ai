@@ -2,6 +2,29 @@
 
 This document presents the assignment requirements, React implementation, CRM REST API endpoints and instructions for running and reviewing the projects.
 
+## Quick review links
+
+Start the projects locally before opening these links; no deployment is required.
+
+| Review target | Local link | How to start |
+| --- | --- | --- |
+| React application | [Open React demo](http://127.0.0.1:5173) | In `frontend`: `npm ci`, then `npm run dev` |
+| Interactive CRM API documentation | [Open Swagger UI](http://localhost:5000/api-docs/) | In `backend`: `npm ci`, then `npm run demo` |
+| OpenAPI specification | [Open API JSON](http://localhost:5000/api-docs.json) | Served by the same backend |
+| API health | [Check backend health](http://localhost:5000/api/health) | Served by the same backend |
+
+For React, enter a valid phone number and use demo OTP **123456**. For Swagger:
+
+1. Expand `POST /api/auth/register`, click **Try it out**, then **Execute** with the example employee details.
+2. Execute `POST /api/auth/login` with the same credentials and copy `data.token` from the response.
+3. Click **Authorize**, paste only the token (without the `Bearer` prefix) and confirm.
+4. Execute `POST /api/enquiries` to submit a public lead, then `GET /api/enquiries/public` to list it.
+5. Copy the enquiry's `_id` into `PATCH /api/enquiries/{id}/claim` and execute it.
+6. Execute `GET /api/enquiries/my` to confirm ownership and the public list again to confirm the lead has disappeared.
+7. Register and log in as a second employee with a different email, replace the authorized token and check both lists to verify privacy.
+
+Swagger requests call the current backend directly. Demo startup downloads MongoDB on its first run; wait for the server to start. Demo data is temporary. For a persistent database, use the backend setup below and `npm run dev` instead.
+
 ## 1. Assignment overview
 
 | Item | Details |

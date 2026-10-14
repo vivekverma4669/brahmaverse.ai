@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
+import { openapi } from './docs/openapi.js';
 import { config } from './config/env.js';
 import { ApiError } from './utils/ApiError.js';
 import { requestLogger } from './middleware/requestLogger.js';
@@ -26,6 +28,19 @@ export function createApp() {
     }),
   );
   app.use(express.json({ limit: '32kb' }));
+  app.get('/api-docs.json', (_req, res) => res.json(openapi));
+  // Permit Swagger's inline bootstrap/styles only on the documentation routes.
+  // Disable HTTPS upgrades here so local HTTP review works in every browser.
+  app.use('/api-docs', helmet({
+    contentSecurityPolicy: { directives: {
+      'script-src': ["'self'", "'unsafe-inline'"],
+      'style-src': ["'self'", "'unsafe-inline'"],
+      'upgrade-insecure-requests': null,
+    } },
+  }), swaggerUi.serve, swaggerUi.setup(openapi, {
+    customSiteTitle: 'CRM Assignment API Docs',
+    swaggerOptions: { validatorUrl: null, persistAuthorization: false },
+  }));
   app.get('/api/health', (_req, res) => {
     const connected = mongoose.connection.readyState === 1;
     res

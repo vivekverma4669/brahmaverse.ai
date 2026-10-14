@@ -21,7 +21,8 @@
     "express-validator": "^7.3.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.1"
+    "mongoose": "^8.19.1",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "mongodb-memory-server": "^10.2.3",

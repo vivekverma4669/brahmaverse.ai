@@ -1,7 +1,9 @@
 import { ApiError } from '../utils/ApiError.js';
+
 export function notFound(_req, _res, next) {
   next(new ApiError(404, 'Route not found.'));
 }
+
 export function errorHandler(error, req, res, next) {
   if (res.headersSent) return next(error);
   let status = 500;
@@ -33,12 +35,10 @@ export function errorHandler(error, req, res, next) {
         message: 'Unexpected server error.',
       }),
     );
-  res
-    .status(status)
-    .json({
-      success: false,
-      message,
-      ...(errors ? { errors } : {}),
-      requestId: req.requestId,
-    });
+  res.status(status).json({
+    success: false,
+    message,
+    ...(errors ? { errors } : {}),
+    requestId: req.requestId,
+  });
 }

@@ -1,5 +1,6 @@
 import { body, param, query, validationResult } from 'express-validator';
 import { ApiError } from '../utils/ApiError.js';
+
 export function validate(req, _res, next) {
   const result = validationResult(req);
   if (!result.isEmpty())
@@ -12,6 +13,7 @@ export function validate(req, _res, next) {
     );
   next();
 }
+
 export function allowedBodyFields(fields) {
   return (req, _res, next) => {
     if (req.body === undefined) {
@@ -25,6 +27,7 @@ export function allowedBodyFields(fields) {
     next();
   };
 }
+
 const nameRule = () =>
   body('name')
     .isString()
